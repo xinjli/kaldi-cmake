@@ -190,7 +190,7 @@ if __name__ == '__main__':
     # directories we do not want to generate CMakeLists.txt
     exclude_dirs = set(["doc", "gst-plugin", "makefiles", ".git", "probe", "tfrnnlm", "tfrnnlmbin", "online", "onlinebin"])
 
-    kaldi_cmake = open(args.kaldi_root + '/CMakeLists.txt', 'w')
+    kaldi_cmake = open(kaldi_root + '/CMakeLists.txt', 'w')
 
     # write project header
     kaldi_cmake.write("cmake_minimum_required (VERSION 2.8)\n\nproject (kaldi)\n\n\ninclude_directories(src)\n\n")
