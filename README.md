@@ -1,7 +1,7 @@
 # kaldi-cmake
 
 This is a simple project to create CMakeLists.txt for kaldi on Linux.
-A description of this project is [here](https://www.xinjianl.com/develop/code-kaldi/kaldi-cmake/)
+A description of this project is [here](https://www.xinjianl.com/blog/2019/04/23/develop-cmake-for-kaldi/)
 
 I did this to debug kaldi with Clion on Linux.
 To make it work on OSX or Windows, you probably need to modify rules based on kaldi.mk
