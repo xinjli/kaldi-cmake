@@ -199,8 +199,7 @@ if __name__ == '__main__':
     kaldi_cmake.write("find_package( Threads )\n")
     kaldi_cmake.write("add_compile_definitions(HAVE_CXXABI_H)\n")
     kaldi_cmake.write("add_compile_definitions(HAVE_EXECINFO_H=1)\n")
-    kaldi_cmake.write("add_compile_definitions(KALDI_DOUBLEPRECISION=0)\n")
-    kaldi_cmake.write("add_compile_definitions(KALDI_DOUBLEPRECISION=0)\n")
+    kaldi_cmake.write("add_compile_definitions(KALDI_DOUBLEPRECISION=0)\n")    
     kaldi_cmake.write("set (CMAKE_CXX_STANDARD 11)\n")
 
     # write cmake dependency to atlas
