@@ -188,7 +188,7 @@ if __name__ == '__main__':
     src_dir = Path(kaldi_root) / 'src'
 
     # directories we do not want to generate CMakeLists.txt
-    exclude_dirs = set(["doc", "gst-plugin", "makefiles", ".git", "probe", "tfrnnlm", "tfrnnlmbin", "online", "onlinebin"])
+    exclude_dirs = set(["doc", "gst-plugin", "makefiles", ".git", "probe", "tfrnnlm", "tfrnnlmbin", "online", "onlinebin", "cudadecoder", "cudadecoderbin"])
 
     kaldi_cmake = open(kaldi_root + '/CMakeLists.txt', 'w')
 
@@ -200,6 +200,8 @@ if __name__ == '__main__':
     kaldi_cmake.write("add_compile_definitions(HAVE_CXXABI_H)\n")
     kaldi_cmake.write("add_compile_definitions(HAVE_EXECINFO_H=1)\n")
     kaldi_cmake.write("add_compile_definitions(KALDI_DOUBLEPRECISION=0)\n")
+    kaldi_cmake.write("add_compile_definitions(KALDI_DOUBLEPRECISION=0)\n")
+    kaldi_cmake.write("set (CMAKE_CXX_STANDARD 11)\n")
 
     # write cmake dependency to atlas
     kaldi_cmake.write("add_compile_definitions(HAVE_ATLAS)\n\ninclude_directories("+ATLASINC+")\n\n")
