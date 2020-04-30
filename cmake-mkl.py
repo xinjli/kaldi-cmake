@@ -10,11 +10,20 @@ kaldi_root = 'your-kaldi-root-path'
 OPENFSTINC = 'your OPENFSTINC defined in kaldi.mk'
 OPENFSTLIBS = 'your OPENFSTLIBS *so* in kaldi.mk'
 
-# variables to atlas (change them to your path in kaldi.mk)
-ATLASINC = 'your ATLASINC defined in kaldi.mk'
-ATLASLIBS = 'your ATLASLIBS *so* in kaldi.mk'
+# variables to mkl 
+# change them to your path in kaldi.mk, 
+# MKLINC is ${MKLROOT}/include
+# MKLLIBS are not explicit listed but can be guessed by compiler flags
+# in my environment, the following paths are working. you can try using those first
+# ---------------------------------------------------------------
+# MKLINC = '/opt/intel/mkl/include'
+# MKLLIBS='/opt/intel/mkl/lib/intel64/libmkl_intel_lp64.so /opt/intel/mkl/lib/intel64/libmkl_intel_thread.so /opt/intel/mkl/lib/intel64/libmkl_core.so /opt/intel/compilers_and_libraries/linux/lib/intel64/libiomp5.so'
+# ----------------------------------------------------------------
 
-dependency_libs = (OPENFSTLIBS +' ' + ATLASLIBS).split()
+MKLINC = 'your ${MKLROOT}/include defined in kaldi.mk'
+MKLLIBS = 'your libraries in ${MKLLIB}, check MKL_STA_SEQ/MKL_STA_MUL/MKL_DYN_SEQ/MKL_DYN_MUL to find your dependencies'
+
+dependency_libs = (OPENFSTLIBS +' ' + MKLLIBS).split()
 
 def generate_cmake(makefile_path, cmake_path):
     """
@@ -43,7 +52,7 @@ def generate_cmake(makefile_path, cmake_path):
     obj_files = []
     libname = None
 
-    # this is to enable atlas and openfst dependency
+    # this is to enable mkl and openfst dependency
     addlibs = [lib for lib in dependency_libs]
 
     # this is to enable pthread flags
@@ -188,7 +197,7 @@ if __name__ == '__main__':
     src_dir = Path(kaldi_root) / 'src'
 
     # directories we do not want to generate CMakeLists.txt
-    exclude_dirs = set(["doc", "gst-plugin", "makefiles", ".git", "probe", "tfrnnlm", "tfrnnlmbin", "online", "onlinebin", "cudadecoder", "cudadecoderbin"])
+    exclude_dirs = set(["doc", "gst-plugin", "makefiles", ".git", "probe", "tfrnnlm", "tfrnnlmbin", "online", "onlinebin", "cudadecoder", "cudadecoderbin", "cudafeat", "cudafeatbin", "cudamatrix"])
 
     kaldi_cmake = open(kaldi_root + '/CMakeLists.txt', 'w')
 
@@ -202,8 +211,8 @@ if __name__ == '__main__':
     kaldi_cmake.write("add_compile_definitions(KALDI_DOUBLEPRECISION=0)\n")    
     kaldi_cmake.write("set (CMAKE_CXX_STANDARD 11)\n")
 
-    # write cmake dependency to atlas
-    kaldi_cmake.write("add_compile_definitions(HAVE_ATLAS)\n\ninclude_directories("+ATLASINC+")\n\n")
+    # write cmake dependency to mkl 
+    kaldi_cmake.write("add_compile_definitions(HAVE_MKL)\n\ninclude_directories("+MKLINC+")\n\n")
     kaldi_cmake.write("include_directories("+OPENFSTINC+")\n\n")
 
     # process subdirectory to generate cmakelists.txt iteratively
